@@ -144,8 +144,8 @@
 #                                             to the 'traversalPath' list.
 #                                        (ii) move the player according to
 #                                             the newly-converted direction.
-#                                       (iii) add player's single move to 
-#                                             the BEGINNING of the
+#                                       (iii) add the player's move to the
+#                                              BEGINNING of the
 #                                             'traversalPath' list.                                       
 #                                  (e) Once the player arrives at the last 
 #                                      room in the returned 'shortest path'
