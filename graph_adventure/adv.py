@@ -23,14 +23,14 @@ player = Player("Name", world.startingRoom)
 # FILL THIS IN
 traversalPath = []
 
-graph = {}
-graph[0] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
-
 # USEFUL COMMANDS
 # player.currentRoom.id 
 # player.currentRoom.getExits()
 # player.travel(direction)
 
+
+graph = {}
+graph[0] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
 print("\n\n--------------WELCOME TO TICO'S ADVENTURE GAME!--------------\n\n")
 print("----------------------------------------------------")
 print("Current Total # of Moves Made: ", len(traversalPath))
@@ -49,8 +49,6 @@ print(f"\n*** PLAYER MOVEMENT: You just moved '{direction_to_travel}'! ***")
 graph[1] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
 graph[0]['n'] = 1
 graph[1]['s'] = 0
-
-
 print("----------------------------------------------------")
 print("Current Total # of Moves Made: ", len(traversalPath))
 print("Current List of Moves Made: ", traversalPath)
@@ -68,8 +66,6 @@ print(f"\n*** PLAYER MOVEMENT: You just moved '{direction_to_travel}'! ***")
 graph[2] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
 graph[1]['n'] = 2
 graph[2]['s'] = 1
-
-
 print("----------------------------------------------------")
 print("Current Total # of Moves Made: ", len(traversalPath))
 print("Current List of Moves Made: ", traversalPath)
@@ -77,12 +73,6 @@ print("Current Room #: ", player.currentRoom.id)
 print("Available Exits for Current Room: ", player.currentRoom.getExits())
 print("Current Graph of Rooms: \n", graph)
 print("----------------------------------------------------\n\n")
-
-
-
-
-
-
 
 
 print("------------------------------------------")
