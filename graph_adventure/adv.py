@@ -29,15 +29,18 @@ traversalPath = []
 # player.travel(direction)
 
 
+
+print("\n\n--------------WELCOME TO TICO'S ADVENTURE GAME!--------------\n\n")
+
 graph = {}
 graph[0] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
-print("\n\n--------------WELCOME TO TICO'S ADVENTURE GAME!--------------\n\n")
-print("----------------------------------------------------")
-print("Current Total # of Moves Made: ", len(traversalPath))
-print("Current List of Moves Made: ", traversalPath)
-print("Current Room #: ", player.currentRoom.id)
-print("Available Exits for Current Room: ", player.currentRoom.getExits())
-print("Current Graph of Rooms: \n", graph)
+print("------------------CURRENT STATUS--------------------")
+print("Total # of Moves Made: ", len(traversalPath))
+print("List of All Moves Made: ", traversalPath)
+print("Room #: ", player.currentRoom.id)
+print("Total # of Exits: ", len(player.currentRoom.getExits()))
+print("Available Exits: ", player.currentRoom.getExits())
+print("Graph of Rooms: \n", graph)
 print("----------------------------------------------------\n\n")
 
 
@@ -49,12 +52,13 @@ print(f"\n*** PLAYER MOVEMENT: You just moved '{direction_to_travel}'! ***")
 graph[1] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
 graph[0]['n'] = 1
 graph[1]['s'] = 0
-print("----------------------------------------------------")
-print("Current Total # of Moves Made: ", len(traversalPath))
-print("Current List of Moves Made: ", traversalPath)
-print("Current Room #: ", player.currentRoom.id)
-print("Available Exits for Current Room: ", player.currentRoom.getExits())
-print("Current Graph of Rooms: \n", graph)
+print("------------------CURRENT STATUS--------------------")
+print("Total # of Moves Made: ", len(traversalPath))
+print("List of All Moves Made: ", traversalPath)
+print("Room #: ", player.currentRoom.id)
+print("Total # of Exits: ", len(player.currentRoom.getExits()))
+print("Available Exits: ", player.currentRoom.getExits())
+print("Graph of Rooms: \n", graph)
 print("----------------------------------------------------\n\n")
 
 
@@ -66,18 +70,18 @@ print(f"\n*** PLAYER MOVEMENT: You just moved '{direction_to_travel}'! ***")
 graph[2] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
 graph[1]['n'] = 2
 graph[2]['s'] = 1
-print("----------------------------------------------------")
-print("Current Total # of Moves Made: ", len(traversalPath))
-print("Current List of Moves Made: ", traversalPath)
-print("Current Room #: ", player.currentRoom.id)
-print("Available Exits for Current Room: ", player.currentRoom.getExits())
-print("Current Graph of Rooms: \n", graph)
+print("------------------CURRENT STATUS--------------------")
+print("Total # of Moves Made: ", len(traversalPath))
+print("List of All Moves Made: ", traversalPath)
+print("Room #: ", player.currentRoom.id)
+print("Total # of Exits: ", len(player.currentRoom.getExits()))
+print("Available Exits: ", player.currentRoom.getExits())
+print("Graph of Rooms: \n", graph)
 print("----------------------------------------------------\n\n")
 
 
-print("------------------------------------------")
-print("------------------------------------------")
-print("------------------------------------------")
+
+print("*************** DID THE TESTS PASS? ****************")
 
 # TRAVERSAL TEST
 visited_rooms = set()
@@ -90,14 +94,16 @@ for move in traversalPath:
     
 
 if len(visited_rooms) == len(roomGraph):
-    print("TESTS for 'traversalPath' PASSED: ")
+    print("\nYES! ALL TESTS for 'traversalPath' PASSED: ")
     print("---TOTAL moves: ", len(traversalPath))
     print("---TOTAL rooms visited: ", len(visited_rooms))
     print("Visited Rooms: ", visited_rooms)
 else:
-    print("TESTS for 'traversalPath' FAILED: INCOMPLETE TRAVERSAL")
+    print("NOPE! TESTS for 'traversalPath' FAILED: INCOMPLETE TRAVERSAL")
     print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
     print("Visited Rooms: ", visited_rooms)
+    
+print("\n****************************************************\n")
 
 
 
