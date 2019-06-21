@@ -58,7 +58,7 @@ def get_full_direction(previous_exit_move):
     elif previous_exit_move == "w":
         return "WEST"
      
-def generate_room_key_value(previous_exit_move):
+def get_opposite_room_key_value(previous_exit_move):
     if previous_exit_move == "n":
         return "s"
     elif previous_exit_move == "s":
@@ -208,6 +208,10 @@ else:
     print("---Visited Rooms: \n", visited_rooms)
     
 print("\n****************************************************\n")
+print(get_opposite_room_key_value('n'))
+print(get_opposite_room_key_value('s'))
+print(get_opposite_room_key_value('e'))
+print(get_opposite_room_key_value('w'))
 
 
 
