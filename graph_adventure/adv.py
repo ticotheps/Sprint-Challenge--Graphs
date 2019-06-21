@@ -23,26 +23,43 @@ player = Player("Name", world.startingRoom)
 # FILL THIS IN
 traversalPath = ["n", "n"]
 
+graph = {}
+
 # player.currentRoom.id 
 # player.currentRoom.getExits()
 # player.travel(direction)
 
-print("\n\nCurrent Room: ", player.currentRoom.id)
+print("\n\n--------------WELCOME TO TICO'S ADVENTURE GAME!--------------")
+print("----------------------------------------------------")
+print("Current Room: ", player.currentRoom.id)
 print("Available Exits for Current Room: ", player.currentRoom.getExits())
+print("Current Graph of Rooms: \n", graph)
+print("----------------------------------------------------\n\n")
+
+graph[0] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
 
 direction_to_travel = "n"
 player.travel(direction_to_travel)
-print("You just moved: ", direction_to_travel, "!\n\n")
+print(f"\n*** PLAYER MOVEMENT: You just moved '{direction_to_travel}'! ***")
 
+graph[1] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
+
+print("----------------------------------------------------")
 print("Current Room: ", player.currentRoom.id)
-print("Available Exits for Current Room: ", player.currentRoom.getExits(), "!\n\n")
+print("Available Exits for Current Room: ", player.currentRoom.getExits())
+print("Current Graph of Rooms: \n", graph)
+print("----------------------------------------------------\n\n")
+
 
 direction_to_travel = "n"
 player.travel(direction_to_travel)
-print("You just moved: ", direction_to_travel, "!\n\n")
+print(f"\n*** PLAYER MOVEMENT: You just moved '{direction_to_travel}'! ***")
 
+print("----------------------------------------------------")
 print("Current Room: ", player.currentRoom.id)
-print("Available Exits for Current Room: ", player.currentRoom.getExits(), "!\n\n")
+print("Available Exits for Current Room: ", player.currentRoom.getExits())
+print("Current Graph of Rooms: \n", graph)
+print("----------------------------------------------------\n\n")
 
 
 
