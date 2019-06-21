@@ -23,6 +23,23 @@ player = Player("Name", world.startingRoom)
 # FILL THIS IN
 traversalPath = ['n', 'n']
 
+# player.currentRoom.id 
+# player.currentRoom.getExits()
+# player.travel(direction)
+
+print("\n\nCurrent Room: ", player.currentRoom.id)
+print("Available Exits for Current Room: ", player.currentRoom.getExits())
+
+direction_to_travel = "n"
+player.travel(direction_to_travel)
+print("You just moved: ", direction_to_travel, "!\n\n")
+
+print("Current Room: ", player.currentRoom.id)
+print("Available Exits for Current Room: ", player.currentRoom.getExits(), "!\n\n")
+
+print("------------------------------------------")
+print("------------------------------------------")
+print("------------------------------------------")
 
 # TRAVERSAL TEST
 visited_rooms = set()
