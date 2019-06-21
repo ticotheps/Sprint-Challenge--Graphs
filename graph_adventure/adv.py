@@ -32,6 +32,8 @@ for move in traversalPath:
     player.travel(move)
     visited_rooms.add(player.currentRoom)
 
+print("Visited Rooms: ", visited_rooms)    
+
 if len(visited_rooms) == len(roomGraph):
     print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_rooms)} rooms visited")
 else:
