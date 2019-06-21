@@ -95,7 +95,7 @@
 #------------------------------DEVISE A PLAN-----------------------------
 
 #  Objectives: 
-#     (1) Create a BFS helpe method (with a DEQUE) that will be called 
+#     (1) Create a BFS helper method (with a DEQUE) that will be called 
 #         when the player reaches a room that has NO exits or has NO 
 #         unexplored exits available at player's the current room.
 #            (a) This method will take two parameters(starting_vertex &
