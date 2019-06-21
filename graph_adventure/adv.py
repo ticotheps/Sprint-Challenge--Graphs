@@ -21,7 +21,7 @@ player = Player("Name", world.startingRoom)
 
 
 # FILL THIS IN
-traversalPath = ['n', 'n']
+traversalPath = ["n", "n"]
 
 # player.currentRoom.id 
 # player.currentRoom.getExits()
@@ -37,6 +37,20 @@ print("You just moved: ", direction_to_travel, "!\n\n")
 print("Current Room: ", player.currentRoom.id)
 print("Available Exits for Current Room: ", player.currentRoom.getExits(), "!\n\n")
 
+direction_to_travel = "n"
+player.travel(direction_to_travel)
+print("You just moved: ", direction_to_travel, "!\n\n")
+
+print("Current Room: ", player.currentRoom.id)
+print("Available Exits for Current Room: ", player.currentRoom.getExits(), "!\n\n")
+
+
+
+
+
+
+
+
 print("------------------------------------------")
 print("------------------------------------------")
 print("------------------------------------------")
@@ -49,13 +63,17 @@ for move in traversalPath:
     player.travel(move)
     visited_rooms.add(player.currentRoom)
 
-print("Visited Rooms: ", visited_rooms)    
+    
 
 if len(visited_rooms) == len(roomGraph):
-    print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_rooms)} rooms visited")
+    print("TESTS for 'traversalPath' PASSED: ")
+    print("---TOTAL moves: ", len(traversalPath))
+    print("---TOTAL rooms visited: ", len(visited_rooms))
+    print("Visited Rooms: ", visited_rooms)
 else:
-    print("TESTS FAILED: INCOMPLETE TRAVERSAL")
+    print("TESTS for 'traversalPath' FAILED: INCOMPLETE TRAVERSAL")
     print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
+    print("Visited Rooms: ", visited_rooms)
 
 
 
