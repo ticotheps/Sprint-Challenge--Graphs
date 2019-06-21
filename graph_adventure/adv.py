@@ -185,7 +185,7 @@ print("----------------------------------------------------\n\n")
 
 
 
-print("*************** DID THE TESTS PASS? ****************")
+print("*************** DID THE TESTS PASS? ****************\n")
 
 # TRAVERSAL TEST
 visited_rooms = set()
@@ -198,14 +198,14 @@ for move in traversalPath:
     
 
 if len(visited_rooms) == len(roomGraph):
-    print("\nYES! ALL TESTS for 'traversalPath' PASSED: ")
+    print("YES!\n \nALL TESTS for 'traversalPath' PASSED: ")
     print("---TOTAL moves: ", len(traversalPath))
     print("---TOTAL rooms visited: ", len(visited_rooms))
     print("Visited Rooms: ", visited_rooms)
 else:
-    print("NOPE! TESTS for 'traversalPath' FAILED: INCOMPLETE TRAVERSAL")
-    print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
-    print("Visited Rooms: ", visited_rooms)
+    print("NOPE! INCOMPLETE TRAVERSAL!\n \nTESTS for 'traversalPath' FAILED:")
+    print(f"---TOTAL # of Unvisited Rooms:\t\t{len(roomGraph) - len(visited_rooms)}")
+    print("---Visited Rooms: \n", visited_rooms)
     
 print("\n****************************************************\n")
 
