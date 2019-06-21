@@ -32,6 +32,7 @@ traversalPath = []
 
 print("\n\n--------------WELCOME TO TICO'S ADVENTURE GAME!--------------\n\n")
 
+random_exit = ""
 graph = {}
 graph[0] = {'n': '?', 's': '?', 'e': '?', 'w': '?',}
 print("------------------CURRENT STATUS--------------------")
@@ -40,6 +41,8 @@ print("List of All Moves Made: ", traversalPath)
 print("Room #: ", player.currentRoom.id)
 print("Total # of Exits: ", len(player.currentRoom.getExits()))
 print("Available Exits: ", player.currentRoom.getExits())
+random_exit = random.sample(player.currentRoom.getExits(), 1)
+print("Randomly Chosen Exit: ", random_exit)
 print("Graph of Rooms: \n", graph)
 print("----------------------------------------------------\n\n")
 
@@ -58,6 +61,8 @@ print("List of All Moves Made: ", traversalPath)
 print("Room #: ", player.currentRoom.id)
 print("Total # of Exits: ", len(player.currentRoom.getExits()))
 print("Available Exits: ", player.currentRoom.getExits())
+random_exit = random.sample(player.currentRoom.getExits(), 1)
+print("Randomly Chosen Exit: ", random.sample(player.currentRoom.getExits(), 1))
 print("Graph of Rooms: \n", graph)
 print("----------------------------------------------------\n\n")
 
@@ -76,6 +81,8 @@ print("List of All Moves Made: ", traversalPath)
 print("Room #: ", player.currentRoom.id)
 print("Total # of Exits: ", len(player.currentRoom.getExits()))
 print("Available Exits: ", player.currentRoom.getExits())
+random_exit = random.sample(player.currentRoom.getExits(), 1)
+print("Randomly Chosen Exit: ", random.sample(player.currentRoom.getExits(), 1))
 print("Graph of Rooms: \n", graph)
 print("----------------------------------------------------\n\n")
 
