@@ -32,11 +32,28 @@ previous_room_id = 0
 previous_exit_move = 'NONE'
 previous_exit_move_full = 'NONE'
 
+# Template for key-value pairs of a new 'room' entry
 room_entry_template = {'n': '?',
                        's': '?', 
                        'e': '?', 
                        'w': '?'} 
 
+def check_unexplored(dictionary, room):
+    if room in dictionary:
+        for key1, value in dictionary.items():
+            if 'n' or 's' or 'e' or 'w' in value:
+                print('n')
+                print(key1)
+                print(value)
+                for key2, value in value.items():
+                    if '?' in value:
+                        return (f"Room # {room} has an UNEXPLORED exit facing '{key2}'!\n")
+
+                return (f"All exits at room # {room} have been explored.")
+    else:
+        return (f"Room # {room} isn't in the dictionary of visited rooms.")
+
+# Prints any nested dictionaries in a readable way
 def print_nested(val, nesting = -5):
     if type(val) == dict:
 	    print("")
@@ -47,7 +64,8 @@ def print_nested(val, nesting = -5):
 		    print_nested(val[k],nesting)
     else:
 	    print(val)
-     
+ 
+# Prints current status of player regarding: rooms, moves, & exits    
 def get_current_status(graph, traversalPath):
     print("\n------------------CURRENT STATUS--------------------")
     print("Previous Exit Move: \t\t\t", previous_exit_move_full)
@@ -84,34 +102,33 @@ def get_opposite_room_key_value(previous_exit_move):
     elif previous_exit_move == "w":
         return "e"
 
-
+# Use Depth First Traversal (DFT)
+# Use a DEQUE instead of a STACK for DFT
 print("\n----------------------------------------------------------------")
 print("\n************** WELCOME TO TICO'S ADVENTURE GAME! ***************\n")
 print("----------------------------------------------------------------")
-
-room_graph = {}
-
-
-# Use a DEQUE instead of STACK
-#  (1)  Create an empty DEQUE to store our scheduled rooms to explore
-#       and push the starting vertex
+# Creates a graph to store previously visited rooms
+room_graph = {}  
+# Creates the FIRST 'room' entry in our adjacency dictionary
 room_graph[player.currentRoom.id] = room_entry_template 
-#  (2)  Create an empty graph to store visited rooms and add starting room
+# Creates an empty DEQUE to store our previous moves
 traversalPath = collections.deque() 
+# Prints out the player's current status regarding: rooms, moves, and exits
 get_current_status(room_graph, traversalPath)
-#  (3)  While the DEQUE is not empty...
-while len(traversalPath) > 0:
+# While the DEQUE is not empty & there are < 500 entries in the dictionary..
+while len(traversalPath) > 0 and len(room_graph) < 500:
     #  (a)  Pop the first room
     current_room = traversalPath.pop()
     #  (b)  If that room has not been visited...
     if current_room not in room_graph:
         #  (i)  Create a room entry for it in the 'visited' dictionary
         room_graph[player.currentRoom.id] = room_entry_template  # Creates a new 'room' entry for the current room
-        print(current_room)
+        print("Current Room: ", current_room)
         #  (ii)  Then, add previous moves to the end of the DEQUE
         # for neighbor in graph[current_room]:
         #     s.push(neighbor)
 
+print(check_unexplored(room_graph, 0))
       
 
 
