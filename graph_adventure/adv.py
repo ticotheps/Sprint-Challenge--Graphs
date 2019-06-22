@@ -38,20 +38,27 @@ room_entry_template = {'n': '?',
                        'e': '?', 
                        'w': '?'} 
 
+def check_visited(dictionary, room):
+    if room in dictionary:
+        print(f"Room # {room} has ALREADY been visited.")
+        return f"Visited: {True} \n"
+    else:
+        print(f"Room # {room} has NOT yet been visited.")
+        return f"Visited: {False} \n"
+
 def check_unexplored(dictionary, room):
     if room in dictionary:
-        for key1, value in dictionary.items():
+        for _, value in dictionary.items():
             if 'n' or 's' or 'e' or 'w' in value:
-                print('n')
-                print(key1)
-                print(value)
                 for key2, value in value.items():
                     if '?' in value:
-                        return (f"Room # {room} has an UNEXPLORED exit facing '{key2}'!\n")
+                        print(f"Room # {room} has an UNEXPLORED exit facing '{key2}'!")
+                        return f"Unexplored Exit Available: {True} \n"
 
-                return (f"All exits at room # {room} have been explored.")
+                print(f"All exits at room # {room} have been explored.")
+                return f"Unexplored Exit Available: {False} \n"
     else:
-        return (f"Room # {room} isn't in the dictionary of visited rooms.")
+        return f"Room # {room} isn't in the dictionary of visited rooms.\n"
 
 # Prints any nested dictionaries in a readable way
 def print_nested(val, nesting = -5):
@@ -129,6 +136,9 @@ while len(traversalPath) > 0 and len(room_graph) < 500:
         #     s.push(neighbor)
 
 print(check_unexplored(room_graph, 0))
+print(check_unexplored(room_graph, 1))
+print(check_visited(room_graph, 0))
+print(check_visited(room_graph, 1))
       
 
 
