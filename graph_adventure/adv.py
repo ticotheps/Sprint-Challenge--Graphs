@@ -74,21 +74,23 @@ def print_nested(val, nesting = -5):
  
 # Prints current status of player regarding: rooms, moves, & exits    
 def get_current_status(graph, traversalPath):
-    print("\n------------------CURRENT STATUS--------------------")
-    print("Previous Exit Move: \t\t\t", previous_exit_move_full)
-    print("Previous Room #: \t\t\t", previous_room_id)
-    print("Current Room #: \t\t\t", player.currentRoom.id)
-    print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
-    print("Available Exits: ", player.currentRoom.getExits())
-    random_exit_array = random.sample(player.currentRoom.getExits(), 1)
-    random_exit_full = get_full_direction(random_exit_array[0])
-    print("Random Future Exit Move: \t\t", random_exit_full)
-    print("\nTotal # of Previous Moves: \t", len(traversalPath))
-    print("List of All Previous Moves: \n\t", traversalPath)
-    print("\nDictionary of Previously Visited Rooms:")
-    print_nested(graph)
-    print("\n------------------------------------------------------")
-     
+    # print("\n------------------CURRENT STATUS--------------------")
+    # print("Previous Exit Move: \t\t\t", previous_exit_move_full)
+    # print("Previous Room #: \t\t\t", previous_room_id)
+    # print("Current Room #: \t\t\t", player.currentRoom.id)
+    # print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
+    # print("Available Exits: ", player.currentRoom.getExits())
+    # random_exit_array = random.sample(player.currentRoom.getExits(), 1)
+    # random_exit_full = get_full_direction(random_exit_array[0])
+    # print("Random Future Exit Move: \t\t", random_exit_full)
+    # print("\nTotal # of Previous Moves: \t", len(traversalPath))
+    # print("List of All Previous Moves: \n\t", traversalPath)
+    # print("\nDictionary of Previously Visited Rooms:")
+    # print_nested(graph)
+    # print("\n------------------------------------------------------")
+    # print("----------------------------------------------------------------\n\n")
+    pass
+        
 def get_full_direction(previous_exit_move):
     if previous_exit_move == "n":
         return "NORTH"
@@ -120,20 +122,56 @@ room_graph = {}
 room_graph[player.currentRoom.id] = room_entry_template 
 # Creates an empty DEQUE to store our previous moves
 traversalPath = collections.deque() 
-# Prints out the player's current status regarding: rooms, moves, and exits
-get_current_status(room_graph, traversalPath)
-# While the DEQUE is not empty & there are < 500 entries in the dictionary..
-while len(traversalPath) > 0 and len(room_graph) < 500:
-    #  (a)  Pop the first room
-    current_room = traversalPath.pop()
-    #  (b)  If that room has not been visited...
-    if current_room not in room_graph:
-        #  (i)  Create a room entry for it in the 'visited' dictionary
-        room_graph[player.currentRoom.id] = room_entry_template  # Creates a new 'room' entry for the current room
-        print("Current Room: ", current_room)
-        #  (ii)  Then, add previous moves to the end of the DEQUE
-        # for neighbor in graph[current_room]:
-        #     s.push(neighbor)
+# While there are < 500 'room' entries in the dictionary..
+while len(room_graph) < 500:
+    # Prints out the player's current status regarding: rooms, moves, and exits
+    print("\n------------------CURRENT STATUS--------------------")
+    print("Previous Exit Move: \t\t\t", previous_exit_move_full)
+    print("Previous Room #: \t\t\t", previous_room_id)
+    print("Current Room #: \t\t\t", player.currentRoom.id)
+    print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
+    print("Available Exits: ", player.currentRoom.getExits())
+    random_exit_array = random.sample(player.currentRoom.getExits(), 1)
+    random_exit_full = get_full_direction(random_exit_array[0])
+    print("Random Future Exit Move: \t\t", random_exit_full)
+    print("\nTotal # of Previous Moves: \t", len(traversalPath))
+    print("List of All Previous Moves: \n\t", traversalPath)
+    print("\nDictionary of Previously Visited Rooms:")
+    print_nested(room_graph)
+    print("\n------------------------------------------------------")
+    print("----------------------------------------------------------------\n\n")
+    
+    # Sets ID of current room to previous_room_id BEFORE moving
+    previous_room_id = player.currentRoom.id   
+    # Sets randomly chosen exit direction to future direction_to_travel
+    direction_to_travel = random_exit_array[0]  
+    # Spells out the full word of the 'future exit move' direction
+    direction_to_travel_full = get_full_direction(direction_to_travel)
+    
+    # Stores the previous move before player makes the move
+    previous_exit_move = direction_to_travel  
+    # Spells out the full word of the 'previous exit move' direction
+    previous_exit_move_full = get_full_direction(previous_exit_move)
+    
+    player.travel(direction_to_travel)  # Moves the player!
+    traversalPath.append(direction_to_travel)  # Adds the player's RECENT move to the 'traversalPath'
+    print(f"\n--------------PLAYER MOVEMENT ALERT----------------")
+    print(f"\nYou just moved {direction_to_travel_full} from Room # {previous_room_id} to get to Room # {player.currentRoom.id}!\n")
+    
+    # While the DEQUE is not empty...
+    while len(traversalPath) > 0:
+        #  (a)  Pop the first room
+        # current_room = traversalPath.pop()
+        #  (b)  If that room has not been visited...
+        if (check_visited(room_graph, player.currentRoom.id) == False):
+            #  (i)  Create a room entry for it in the 'visited' dictionary
+            room_graph[player.currentRoom.id] = room_entry_template  # Creates a new 'room' entry for the current room
+            print("Added Room: ", player.currentRoom.id)
+            #  (ii)  Then, add previous moves to the end of the DEQUE
+            # for neighbor in graph[current_room]:
+            #     s.push(neighbor)
+        else: 
+            print("All rooms have been visited and all exits have been explored.")
 
 print(check_unexplored(room_graph, 0))
 print(check_unexplored(room_graph, 1))
