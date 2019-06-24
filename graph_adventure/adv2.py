@@ -2,7 +2,7 @@ from room import Room
 from player import Player
 from world import World
 
-import collections 
+
 import random
 
 # Load world
@@ -26,41 +26,17 @@ player = Player("Name", world.startingRoom)
 # player.currentRoom.getExits()
 # player.travel(direction)
 
-# traversalPath = []
+traversalPath = []
 
 previous_room_id = 0
 previous_exit_move = 'NONE'
 previous_exit_move_full = 'NONE'
 
-# Template for key-value pairs of a new 'room' entry
 room_entry_template = {'n': '?',
                        's': '?', 
                        'e': '?', 
                        'w': '?'} 
 
-def check_visited(dictionary, room):
-    if room in dictionary:
-        print(f"Room # {room} has ALREADY been visited.")
-        return f"Visited: {True} \n"
-    else:
-        print(f"Room # {room} has NOT yet been visited.")
-        return f"Visited: {False} \n"
-
-def check_unexplored(dictionary, room):
-    if room in dictionary:
-        for _, value in dictionary.items():
-            if 'n' or 's' or 'e' or 'w' in value:
-                for key2, value in value.items():
-                    if '?' in value:
-                        print(f"Room # {room} has an UNEXPLORED exit facing '{key2}'!")
-                        return f"Unexplored Exit Available: {True} \n"
-
-                print(f"All exits at room # {room} have been explored.")
-                return f"Unexplored Exit Available: {False} \n"
-    else:
-        return f"Room # {room} isn't in the dictionary of visited rooms.\n"
-
-# Prints any nested dictionaries in a readable way
 def print_nested(val, nesting = -5):
     if type(val) == dict:
 	    print("")
@@ -71,26 +47,7 @@ def print_nested(val, nesting = -5):
 		    print_nested(val[k],nesting)
     else:
 	    print(val)
- 
-# Prints current status of player regarding: rooms, moves, & exits    
-def get_current_status(graph, traversalPath):
-    # print("\n------------------CURRENT STATUS--------------------")
-    # print("Previous Exit Move: \t\t\t", previous_exit_move_full)
-    # print("Previous Room #: \t\t\t", previous_room_id)
-    # print("Current Room #: \t\t\t", player.currentRoom.id)
-    # print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
-    # print("Available Exits: ", player.currentRoom.getExits())
-    # random_exit_array = random.sample(player.currentRoom.getExits(), 1)
-    # random_exit_full = get_full_direction(random_exit_array[0])
-    # print("Random Future Exit Move: \t\t", random_exit_full)
-    # print("\nTotal # of Previous Moves: \t", len(traversalPath))
-    # print("List of All Previous Moves: \n\t", traversalPath)
-    # print("\nDictionary of Previously Visited Rooms:")
-    # print_nested(graph)
-    # print("\n------------------------------------------------------")
-    # print("----------------------------------------------------------------\n\n")
-    pass
-        
+     
 def get_full_direction(previous_exit_move):
     if previous_exit_move == "n":
         return "NORTH"
@@ -111,199 +68,136 @@ def get_opposite_room_key_value(previous_exit_move):
     elif previous_exit_move == "w":
         return "e"
 
-# Use Depth First Traversal (DFT)
-# Use a DEQUE instead of a STACK for DFT
+
 print("\n----------------------------------------------------------------")
 print("\n************** WELCOME TO TICO'S ADVENTURE GAME! ***************\n")
 print("----------------------------------------------------------------")
-# Creates a graph to store previously visited rooms
-room_graph = {}  
-# Creates the FIRST 'room' entry in our adjacency dictionary
-room_graph[player.currentRoom.id] = room_entry_template 
-# Creates an empty DEQUE to store our previous moves
-traversalPath = collections.deque() 
-# While there are < 500 'room' entries in the dictionary..
-while len(room_graph) < 500:
-    # Prints out the player's current status regarding: rooms, moves, and exits
-    print("\n------------------CURRENT STATUS--------------------")
-    print("Previous Exit Move: \t\t\t", previous_exit_move_full)
-    print("Previous Room #: \t\t\t", previous_room_id)
-    print("Current Room #: \t\t\t", player.currentRoom.id)
-    print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
-    print("Available Exits: ", player.currentRoom.getExits())
-    random_exit_array = random.sample(player.currentRoom.getExits(), 1)
-    random_exit_full = get_full_direction(random_exit_array[0])
-    print("Random Future Exit Move: \t\t", random_exit_full)
-    print("\nTotal # of Previous Moves: \t", len(traversalPath))
-    print("List of All Previous Moves: \n\t", traversalPath)
-    print("\nDictionary of Previously Visited Rooms:")
-    print_nested(room_graph)
-    print("\n------------------------------------------------------")
-    print("----------------------------------------------------------------\n\n")
-    
-    # Sets ID of current room to previous_room_id BEFORE moving
-    previous_room_id = player.currentRoom.id   
-    # Sets randomly chosen exit direction to future direction_to_travel
-    direction_to_travel = random_exit_array[0]  
-    # Spells out the full word of the 'future exit move' direction
-    direction_to_travel_full = get_full_direction(direction_to_travel)
-    
-    # Stores the previous move before player makes the move
-    previous_exit_move = direction_to_travel  
-    # Spells out the full word of the 'previous exit move' direction
-    previous_exit_move_full = get_full_direction(previous_exit_move)
-    
-    player.travel(direction_to_travel)  # Moves the player!
-    traversalPath.append(direction_to_travel)  # Adds the player's RECENT move to the 'traversalPath'
-    print(f"\n--------------PLAYER MOVEMENT ALERT----------------")
-    print(f"\nYou just moved {direction_to_travel_full} from Room # {previous_room_id} to get to Room # {player.currentRoom.id}!\n")
-    
-    # While the DEQUE is not empty...
-    while len(traversalPath) > 0:
-        #  (a)  Pop the first room
-        # current_room = traversalPath.pop()
-        #  (b)  If that room has not been visited...
-        if (check_visited(room_graph, player.currentRoom.id) == False):
-            #  (i)  Create a room entry for it in the 'visited' dictionary
-            room_graph[player.currentRoom.id] = room_entry_template  # Creates a new 'room' entry for the current room
-            print("Added Room: ", player.currentRoom.id)
-            #  (ii)  Then, add previous moves to the end of the DEQUE
-            # for neighbor in graph[current_room]:
-            #     s.push(neighbor)
-        else: 
-            print("All rooms have been visited and all exits have been explored.")
-
-print(check_unexplored(room_graph, 0))
-print(check_unexplored(room_graph, 1))
-print(check_visited(room_graph, 0))
-print(check_visited(room_graph, 1))
-      
 
 
-# graph = {}  # Creates our graph
-# graph[player.currentRoom.id] = room_entry_template 
-# print("\n------------------CURRENT STATUS--------------------")
-# print("Previous Exit Move: \t\t\t", previous_exit_move_full)
-# print("Previous Room #: \t\t\t", previous_room_id)
-# print("Current Room #: \t\t\t", player.currentRoom.id)
-# print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
-# print("Available Exits: ", player.currentRoom.getExits())
-# random_exit_array = random.sample(player.currentRoom.getExits(), 1)
-# random_exit_full = get_full_direction(random_exit_array[0])
-# print("Random Future Exit Move: \t\t", random_exit_full)
-# print("\nTotal # of Previous Moves: \t", len(traversalPath))
-# print("List of All Previous Moves: \n\t", traversalPath)
-# print("\nDictionary of Previously Visited Rooms:")
-# print_nested(graph)
-# print("\n------------------------------------------------------")
-# print("----------------------------------------------------------------\n\n")
+graph = {}  # Creates our graph
+graph[player.currentRoom.id] = room_entry_template 
+print("\n------------------CURRENT STATUS--------------------")
+print("Previous Exit Move: \t\t\t", previous_exit_move_full)
+print("Previous Room #: \t\t\t", previous_room_id)
+print("Current Room #: \t\t\t", player.currentRoom.id)
+print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
+print("Available Exits: ", player.currentRoom.getExits())
+random_exit_array = random.sample(player.currentRoom.getExits(), 1)
+random_exit_full = get_full_direction(random_exit_array[0])
+print("Random Future Exit Move: \t\t", random_exit_full)
+print("\nTotal # of Previous Moves: \t", len(traversalPath))
+print("List of All Previous Moves: \n\t", traversalPath)
+print("\nDictionary of Previously Visited Rooms:")
+print_nested(graph)
+print("\n------------------------------------------------------")
+print("----------------------------------------------------------------\n\n")
 
 
-# previous_room_id = player.currentRoom.id  # Sets ID of current room to previous_room_id BEFORE traveling 
-# direction_to_travel = random_exit_array[0]  # Sets randomly chosen exit direction to future direction_to_travel BEFORE traveling
-# direction_to_travel_full = get_full_direction(direction_to_travel)
+previous_room_id = player.currentRoom.id  # Sets ID of current room to previous_room_id BEFORE traveling 
+direction_to_travel = random_exit_array[0]  # Sets randomly chosen exit direction to future direction_to_travel BEFORE traveling
+direction_to_travel_full = get_full_direction(direction_to_travel)
 
-# previous_exit_move = direction_to_travel  # Stores the previous move before player makes the move
-# previous_exit_move_full = get_full_direction(previous_exit_move)
+previous_exit_move = direction_to_travel  # Stores the previous move before player makes the move
+previous_exit_move_full = get_full_direction(previous_exit_move)
 
-# player.travel(direction_to_travel)  # Moves the player!
-# traversalPath.append(direction_to_travel)  # Adds the player's RECENT move to the 'traversalPath'
-# print(f"\n--------------PLAYER MOVEMENT ALERT----------------")
-# print(f"\nYou just moved {direction_to_travel_full} from Room # {previous_room_id} to get to Room # {player.currentRoom.id}!\n")
+player.travel(direction_to_travel)  # Moves the player!
+traversalPath.append(direction_to_travel)  # Adds the player's RECENT move to the 'traversalPath'
+print(f"\n--------------PLAYER MOVEMENT ALERT----------------")
+print(f"\nYou just moved {direction_to_travel_full} from Room # {previous_room_id} to get to Room # {player.currentRoom.id}!\n")
 
-# graph[player.currentRoom.id] = room_entry_template  # Creates a new 'room' entry for the current room
+graph[player.currentRoom.id] = room_entry_template  # Creates a new 'room' entry for the current room
 
-# print("previous exit move: ", previous_exit_move)
-# graph[previous_room_id][get_opposite_room_key_value(previous_exit_move)] = player.currentRoom.id
-# print("previous exit move: ", previous_exit_move)
-# print("Current Room: ", player.currentRoom.id)
-# graph[player.currentRoom.id][direction_to_travel] = previous_room_id
-# print("------------------CURRENT STATUS--------------------")
-# print("Previous Exit Move: \t\t\t", previous_exit_move_full)
-# print("Previous Room #: \t\t\t", previous_room_id)
-# print("Current Room #: \t\t\t", player.currentRoom.id)
-# print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
-# print("Available Exits: ", player.currentRoom.getExits())
-# random_exit_array = random.sample(player.currentRoom.getExits(), 1)
-# random_exit_full = get_full_direction(random_exit_array[0])
-# print("Random Future Exit Move: \t\t", random_exit_full)
-# print("\nTotal # of Previous Moves: \t", len(traversalPath))
-# print("List of All Previous Moves: \n\t", traversalPath)
-# print("\nDictionary of Previously Visited Rooms:")
-# print_nested(graph)
-# print("\n------------------------------------------------------")
-# print("----------------------------------------------------------------\n\n")
+print("previous exit move: ", previous_exit_move)
+graph[previous_room_id][get_opposite_room_key_value(previous_exit_move)] = player.currentRoom.id
+print("previous exit move: ", previous_exit_move)
+print("Current Room: ", player.currentRoom.id)
+graph[player.currentRoom.id][direction_to_travel] = previous_room_id
+print("------------------CURRENT STATUS--------------------")
+print("Previous Exit Move: \t\t\t", previous_exit_move_full)
+print("Previous Room #: \t\t\t", previous_room_id)
+print("Current Room #: \t\t\t", player.currentRoom.id)
+print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
+print("Available Exits: ", player.currentRoom.getExits())
+random_exit_array = random.sample(player.currentRoom.getExits(), 1)
+random_exit_full = get_full_direction(random_exit_array[0])
+print("Random Future Exit Move: \t\t", random_exit_full)
+print("\nTotal # of Previous Moves: \t", len(traversalPath))
+print("List of All Previous Moves: \n\t", traversalPath)
+print("\nDictionary of Previously Visited Rooms:")
+print_nested(graph)
+print("\n------------------------------------------------------")
+print("----------------------------------------------------------------\n\n")
 
 
-# previous_room_id = player.currentRoom.id
-# direction_to_travel = random_exit_array[0]
-# direction_to_travel_full = get_full_direction(direction_to_travel)
+previous_room_id = player.currentRoom.id
+direction_to_travel = random_exit_array[0]
+direction_to_travel_full = get_full_direction(direction_to_travel)
 
-# previous_exit_move = direction_to_travel
-# previous_exit_move_full = get_full_direction(previous_exit_move)
+previous_exit_move = direction_to_travel
+previous_exit_move_full = get_full_direction(previous_exit_move)
 
-# player.travel(direction_to_travel)
-# traversalPath.append(direction_to_travel)
-# print(f"\n--------------PLAYER MOVEMENT ALERT----------------")
-# print(f"\nYou just moved {direction_to_travel_full} from Room # {previous_room_id} to get to Room # {player.currentRoom.id}!\n")
+player.travel(direction_to_travel)
+traversalPath.append(direction_to_travel)
+print(f"\n--------------PLAYER MOVEMENT ALERT----------------")
+print(f"\nYou just moved {direction_to_travel_full} from Room # {previous_room_id} to get to Room # {player.currentRoom.id}!\n")
 
-# graph[player.currentRoom.id] = room_entry_template
+graph[player.currentRoom.id] = room_entry_template
 
-# graph[player.currentRoom.id][previous_exit_move] = previous_room_id
-# print("previous exit move: ", previous_exit_move)
-# graph[previous_room_id][get_opposite_room_key_value(previous_exit_move)] = player.currentRoom.id
-# print("previous exit move: ", previous_exit_move)
-# print("------------------CURRENT STATUS--------------------")
-# print("Previous Exit Move: \t\t\t", previous_exit_move_full)
-# print("Previous Room #: \t\t\t", previous_room_id)
-# print("Current Room #: \t\t\t", player.currentRoom.id)
-# print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
-# print("Available Exits: ", player.currentRoom.getExits())
-# random_exit_array = random.sample(player.currentRoom.getExits(), 1)
-# random_exit_full = get_full_direction(random_exit_array[0])
-# print("Random Future Exit Move: \t\t", random_exit_full)
-# print("\nTotal # of Previous Moves: \t", len(traversalPath))
-# print("List of All Previous Moves: \n\t", traversalPath)
-# print("\nDictionary of Previously Visited Rooms:")
-# print_nested(graph)
-# print("\n------------------------------------------------------")
-# print("----------------------------------------------------------------\n\n")
+graph[player.currentRoom.id][previous_exit_move] = previous_room_id
+print("previous exit move: ", previous_exit_move)
+graph[previous_room_id][get_opposite_room_key_value(previous_exit_move)] = player.currentRoom.id
+print("previous exit move: ", previous_exit_move)
+print("------------------CURRENT STATUS--------------------")
+print("Previous Exit Move: \t\t\t", previous_exit_move_full)
+print("Previous Room #: \t\t\t", previous_room_id)
+print("Current Room #: \t\t\t", player.currentRoom.id)
+print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
+print("Available Exits: ", player.currentRoom.getExits())
+random_exit_array = random.sample(player.currentRoom.getExits(), 1)
+random_exit_full = get_full_direction(random_exit_array[0])
+print("Random Future Exit Move: \t\t", random_exit_full)
+print("\nTotal # of Previous Moves: \t", len(traversalPath))
+print("List of All Previous Moves: \n\t", traversalPath)
+print("\nDictionary of Previously Visited Rooms:")
+print_nested(graph)
+print("\n------------------------------------------------------")
+print("----------------------------------------------------------------\n\n")
 
 
 
-# previous_room_id = player.currentRoom.id
-# direction_to_travel = random_exit_array[0]
-# direction_to_travel_full = get_full_direction(direction_to_travel)
+previous_room_id = player.currentRoom.id
+direction_to_travel = random_exit_array[0]
+direction_to_travel_full = get_full_direction(direction_to_travel)
 
-# previous_exit_move = direction_to_travel
-# previous_exit_move_full = get_full_direction(previous_exit_move)
+previous_exit_move = direction_to_travel
+previous_exit_move_full = get_full_direction(previous_exit_move)
 
-# player.travel(direction_to_travel)
-# traversalPath.append(direction_to_travel)
-# print(f"\n--------------PLAYER MOVEMENT ALERT----------------")
-# print(f"\nYou just moved {direction_to_travel_full} from Room # {previous_room_id} to get to Room # {player.currentRoom.id}!\n")
+player.travel(direction_to_travel)
+traversalPath.append(direction_to_travel)
+print(f"\n--------------PLAYER MOVEMENT ALERT----------------")
+print(f"\nYou just moved {direction_to_travel_full} from Room # {previous_room_id} to get to Room # {player.currentRoom.id}!\n")
 
-# graph[player.currentRoom.id] = room_entry_template
+graph[player.currentRoom.id] = room_entry_template
 
-# print("previous exit move: ", previous_exit_move)
-# graph[player.currentRoom.id][previous_exit_move] = previous_room_id
-# print("previous exit move: ", previous_exit_move)
-# graph[previous_room_id][get_opposite_room_key_value(previous_exit_move)] = player.currentRoom.id
-# print("------------------CURRENT STATUS--------------------")
-# print("Previous Exit Move: \t\t\t", previous_exit_move_full)
-# print("Previous Room #: \t\t\t", previous_room_id)
-# print("Current Room #: \t\t\t", player.currentRoom.id)
-# print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
-# print("Available Exits: ", player.currentRoom.getExits())
-# random_exit_array = random.sample(player.currentRoom.getExits(), 1)
-# random_exit_full = get_full_direction(random_exit_array[0])
-# print("Random Future Exit Move: \t\t", random_exit_full)
-# print("\nTotal # of Previous Moves: \t", len(traversalPath))
-# print("List of All Previous Moves: \n\t", traversalPath)
-# print("\nDictionary of Previously Visited Rooms:")
-# print_nested(graph)
-# print("\n------------------------------------------------------")
-# print("----------------------------------------------------------------\n\n")
+print("previous exit move: ", previous_exit_move)
+graph[player.currentRoom.id][previous_exit_move] = previous_room_id
+print("previous exit move: ", previous_exit_move)
+graph[previous_room_id][get_opposite_room_key_value(previous_exit_move)] = player.currentRoom.id
+print("------------------CURRENT STATUS--------------------")
+print("Previous Exit Move: \t\t\t", previous_exit_move_full)
+print("Previous Room #: \t\t\t", previous_room_id)
+print("Current Room #: \t\t\t", player.currentRoom.id)
+print("\nTotal # of Exits: \t\t\t", len(player.currentRoom.getExits()))
+print("Available Exits: ", player.currentRoom.getExits())
+random_exit_array = random.sample(player.currentRoom.getExits(), 1)
+random_exit_full = get_full_direction(random_exit_array[0])
+print("Random Future Exit Move: \t\t", random_exit_full)
+print("\nTotal # of Previous Moves: \t", len(traversalPath))
+print("List of All Previous Moves: \n\t", traversalPath)
+print("\nDictionary of Previously Visited Rooms:")
+print_nested(graph)
+print("\n------------------------------------------------------")
+print("----------------------------------------------------------------\n\n")
 
 
 
