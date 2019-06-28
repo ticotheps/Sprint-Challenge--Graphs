@@ -30,7 +30,7 @@ def game_start():
     print("\n************** WELCOME TO TICO'S ADVENTURE GAME! ***************\n")
     print("----------------------------------------------------------------")
 
-# Prints any nested dictionaries in a readable way
+# Prints any nested dictionaries in a readable way.
 def print_nested(val, nesting = -5):
     if type(val) == dict:
 	    print("")
@@ -42,7 +42,7 @@ def print_nested(val, nesting = -5):
     else:
 	    print(val)
      
-# Returns the opposite direction of the input given
+# Returns the opposite direction of the input given.
 def get_opposite_direction(direction):
     if direction == "n":
         return "s"
@@ -55,10 +55,74 @@ def get_opposite_direction(direction):
 
 # FILL THIS IN
 traversalPath = ['n', 'n']
-visited_rooms = set()
+
+# Stores a set() of ALL the rooms, across ALL "trips", that have been visited.
+# "trip" = the total sequence of consecutive moves made by the player before
+#          reaching a DEAD-END room.
+visited_total = set()
+
+# Stores a dictionary of each visited room, as well as their available exits.
 rooms_graph = {}
 
+# Finds the nearest room with an unexplored exit available.
+def find_nearest_unexplored(graph, starting_room_id):
+    # Checks each available exit at the player's current room...
+    for available_exit in graph[starting_room_id]:
+        # If an unexplored exit is available...
+        if graph[starting_room_id][available_exit] == '?':
+            # return 'None' and don't traverse backwards.
+            return None
 
+    # If an unexplored exit is NOT available...
+    # Creates a Queue() to store a list of possible paths that the player can
+    #   use to traverse backwards, to find the nearest room with a "?" exit 
+    #   value.
+    q = []
+    # Adds the starting_room_id to a path, that is then added to the
+    #   queue as the first path in the queue.
+    q.append([starting_room_id])
+    # Creates a dictionary of visited rooms while the player is traversing
+    #   backwards on this "trip".
+    visited_trip = set()
+    # As long as this list of paths is NOT empty...
+    while len(q) > 0:
+        # Pop off the the first path (a list of rooms to be visited) from the 
+        #   Queue() and set it equal to a variable called 'path'.
+        path = q.pop(0)
+        # Grab the value of the LAST item in the 'path' variable to 
+        #   evaluate as the player's current room, called "current_room".
+        current_room = path[-1]
+        # If this current room has not already been visited...
+        if current_room not in visited_trip:
+            # ...add it to the dictionary of rooms that have already been
+            #      visited on this "trip".
+            visited_trip.add(current_room)
+            # Checks for any available exits at the current room...
+            for available_exit in graph[current_room]:
+                # ...if the current room DOES have an available exit that
+                #      has NOT already been explored...
+                if graph[current_room][available_exit] == '?':
+                    # then return the path to that room and exit this WHILE
+                    #   loop.
+                    return path
+            # Iterates through each available, neighboring exit of the 
+            #   current_room...
+            for available_exit_neighbor in graph[current_room]:
+                # ...and creates a copied list ('newPath') of all the rooms 
+                #      that were previously traversed through, to get to 
+                #      the current_room that the player is in now..
+                newPath = path.copy()
+                # Get the room ID value of the room that the player WILL
+                #   enter if they choose to exit through this currently
+                #   iterated 'available_exit_neighbor' and set it equal to
+                #   a new variable called 'room_of_exit_neighbor'
+                room_of_exit_neighbor = graph[current_room][available_exit_neighbor]
+                # Add the value of 'room_of_exit_neighbor' to this copied list
+                newPath.append(room_of_exit_neighbor)
+                # Add this newly-created, possible path to the Queue()
+                q.append(newPath)
+    
+    return None
 
 
 
@@ -78,14 +142,14 @@ print("Should print 'e':", get_opposite_direction("w"))
 #     player.travel(move)
 #     visited_rooms.add(player.currentRoom)
 
-if len(visited_rooms) == len(roomGraph):
-    print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_rooms)} rooms visited\n")
-    print("Visited Rooms:\n", visited_rooms)
+if len(visited_total) == len(roomGraph):
+    print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_total)} rooms visited\n")
+    print("Visited Rooms:\n", visited_total)
     print("\nDictionary of Previously Visited Rooms:")
 else:
     print("TESTS FAILED: INCOMPLETE TRAVERSAL\n")
-    print("Visited Rooms:\n", visited_rooms)
-    print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
+    print("Visited Rooms:\n", visited_total)
+    print(f"{len(roomGraph) - len(visited_total)} unvisited rooms")
     print("\nPreviously Visited Rooms:\n")
 
 
