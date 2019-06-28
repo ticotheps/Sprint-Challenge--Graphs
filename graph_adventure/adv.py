@@ -62,7 +62,7 @@ traversalPath = ['n', 'n']
 visited_total = set()
 
 # Stores a dictionary of each visited room, as well as their available exits.
-rooms_graph = {}
+my_rooms_graph = {}
 
 # Finds the nearest room with an unexplored exit available.
 def find_nearest_unexplored(graph, starting_room_id):
@@ -136,12 +136,75 @@ def add_visited_room(graph, current_room):
         #   'visited_total' list.
         visited_total.add(current_room.id)
         
+# As long as the # of items in the given 'roomGraph' dictionary is NOT
+#   equal to the # of items in my 'my_rooms_graph' dictionary...
+while len(roomGraph) != len(my_rooms_graph):
+    # Sets the player's current room ID to a new variable 
+    current_room_id = player.currentRoom.id
+    # Adds the player's current room to the 'visited_total' list
+    add_visited_room(my_rooms_graph, player.currentRoom)
+    # Iterates through each available exit at the key of the current room,
+    #   in the adjacency dictionary...
+    for available_exit in my_rooms_graph[current_room_id]:
+        # If the value of the the current room's key is equal to '?'...
+        if my_rooms_graph[current_room_id][available_exit] == '?':
+            # ...then add this available exit's direction to the
+            #      'traversalPath'.
+            traversalPath.append(available_exit)
+            # Moves the player through this available exit.
+            player.travel(available_exit)  
+            # Adds the previous room (that the player JUST moved from) to
+            #   the 'visited_total' list.
+            add_visited_room(my_rooms_graph, player.currentRoom)
+            # Grabs the value of the NEW room (that the player just moved
+            #   into) and sets it equal to a new variable
+            new_room_id = player.currentRoom.id    
+            # Gets the value of the OPPOSITE direction of the available
+            #   exit being evaluated and sets it equal to a new variable.
+            opposite_direction = get_opposite_direction(available_exit)
+            # Sets the value of the PREVIOUS room's key (the exit that  
+            #   the player just moved through) to the room ID of the 
+            #   player's NEW current room (that the player JUST entered).
+            my_rooms_graph[current_room_id][available_exit] = new_room_id
+            # Sets the value of the OPPPOSITE of the NEW room's key (the   
+            #   exit that the player JUST moved through) to the room ID 
+            #   of the player's PREVIOUS current room (that the player 
+            #   JUST came from).
+            my_rooms_graph[new_room_id][opposite_direction] = current_room_id
+            # Sets the current room's (PREVIOUS ROOM) ID to the new room's
+            #   (the room the player is CURRENTLY in) ID to allow for another
+            #   iteration of this FOR loop to occur.
+            current_room_id = new_room_id
+            break  
         
-
+    # Calls the 'find_nearest_unexplored()' method to find the shortest 
+    #   path to the nearest room with an unexplored exit and sets that 
+    #   list of room IDs equal to a variable.
+    path_to_unexplored = find_nearest_unexplored(my_rooms_graph, player.currentRoom.id)
+    # If the current path has no unexplored paths available...
+    if path_to_unexplored is not None:
+        # ...then iterate through that list of room IDs (to get to the
+        #      nearest room with an unexplored path)...
+        for room_id in path_to_unexplored:
+            # ...and of each room ID being iterated through, iterate
+            #      through the list of values (other room IDs), for 
+            #      each of those available exits, at that room...
+            for available_exit in my_rooms_graph[current_room_id]:
+                # ...and if the value of an available exit (a room ID
+                #      of a room the player WOULD enter if traveling
+                #      through that exit) is equal to the CURRENT room ID
+                #      being evaluated, then... 
+                if my_rooms_graph[current_room_id][available_exit] == room_id:
+                    # Add the available exit (the direction) of that room 
+                    #   ID to the 'traveralPath'...
+                    traversalPath.append(available_exit)
+                    # ...and move the player throught that key (the available 
+                    #      exit).
+                    player.travel(available_exit)
 
 
 game_start()
-print_nested("Rooms Graph:\n", rooms_graph)
+print_nested("Rooms Graph:\n", my_rooms_graph)
 print("Should print 's':", get_opposite_direction("n"))
 print("Should print 'n':", get_opposite_direction("s"))
 print("Should print 'w':", get_opposite_direction("e"))
