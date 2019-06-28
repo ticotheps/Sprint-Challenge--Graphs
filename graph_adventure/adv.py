@@ -48,6 +48,9 @@ traversalPath = ['n', 'n']
 
 room_graph = {}
 
+game_start()
+print_nested(room_graph)
+
 
 # TRAVERSAL TEST
 visited_rooms = set()
@@ -66,9 +69,6 @@ else:
     print("Visited Rooms:\n", visited_rooms)
     print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
     print("\nDictionary of Previously Visited Rooms:")
-
-game_start()
-print_nested(room_graph)
 
 
 

@@ -110,11 +110,12 @@
 #                will store an updated log of 'room' entries for each room 
 #                that the player has already visited. 
 #            (b) Each 'room' entry in the adjacency dictionary will store 
-#                an adjacency list of 'exit' values (i.e. - '?', 'n', 's', 'e', 'w').
+#                an adjacency list of 'exit' values (i.e. - '?', 'n', 's',
+#                'e', 'w').
 #            (c) Create a DEQUE called 'traversalPath' that will store 
-#                a list of each move (in the form of a direction, such as:
-#                "n", "s", "e", "w") that the player makes, from the start
-#                of the game to the end of the game. 
+#                a list of every move (in the form of a direction, such as:
+#                "n", "s", "e", "w") the player makes, from the start of
+#                the game to the end of the game. 
 #            (d) Use a WHILE loop that will continue (so long as the the
 #                number of entries in the dictionary is < 500) to move the 
 #                player from room to room AS LONG AS the player continues
