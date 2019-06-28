@@ -62,3 +62,38 @@
 #           (f) repeats steps (a) - (e) until all 500 rooms have been
 #               visited and each room no longer contains ANY "?" in their
 #               adjacency lists.
+
+#     (3) Use a Breadth First Search (BFS) to find the SHORTEST path 
+#         to the NEAREST room with an UNEXPLORED exit (when the player
+#         has reached a DEAD-END room with DFS).
+#            (a) Set your 'destination_vertex' to a value of "?", which
+#                will search for the shortest path to a room with a
+#                "?" as ONE of its "exit" values.
+#            (b) If a room has NO "?" value for any of it's "exit" values
+#                (because all exits have been explored) you can put it in
+#                your BFS queue like normal.
+#            (c) BFS will return the shortest path as a LIST of room IDs.
+#                   (i)  Every move that the player makes to get to this
+#                        'nearest room with an unexplored exit' must ALSO 
+#                        be added to the 'traversalPath' list.
+#                   (ii) Each move will need to be converted from a room
+#                        ID to an actual DIRECTION (i.e. - north(n), 
+#                        south(s), etc.) before it can be added to the
+#                        'traversalPath' list.
+
+#     (4) Do not use a STACK as the data structure for your DFT & BFS!
+#            (a) Using a DEQUE as the data structure for your DFT and BFS
+#                methods will be superior to using a STACK because:
+#                   (i)  DEQUES (double-ended queues) allow for the fast 
+#                        addition & removal of elements from BOTH ends 
+#                        of the queue, whereas elements in a STACK can 
+#                        only be added or removed from the end of a STACK.
+#                   (ii) DEQUES also have built-in methods that STACKS do
+#                        not, such as:
+#                           (a) .append()
+#                           (b) .appendLeft()
+#                           (c) .pop()
+#                           (d) .popLeft()
+#                           (e) .reverse() 
+
+#     (5) Once all exits have been explored, the game is over!
