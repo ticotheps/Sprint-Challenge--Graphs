@@ -41,34 +41,52 @@ def print_nested(val, nesting = -5):
 		    print_nested(val[k],nesting)
     else:
 	    print(val)
-
+     
+# Returns the opposite direction of the input given
+def get_opposite_direction(direction):
+    if direction == "n":
+        return "s"
+    elif direction == "s":
+        return "n"
+    elif direction == "e":
+        return "w"
+    elif direction == "w":
+        return "e"
 
 # FILL THIS IN
 traversalPath = ['n', 'n']
+visited_rooms = set()
+rooms_graph = {}
 
-room_graph = {}
+
+
+
 
 game_start()
-print_nested(room_graph)
+print_nested("Rooms Graph:\n", rooms_graph)
+print("Should print 's':", get_opposite_direction("n"))
+print("Should print 'n':", get_opposite_direction("s"))
+print("Should print 'w':", get_opposite_direction("e"))
+print("Should print 'e':", get_opposite_direction("w"))
 
 
 # TRAVERSAL TEST
-visited_rooms = set()
-player.currentRoom = world.startingRoom
-visited_rooms.add(player.currentRoom)
-for move in traversalPath:
-    player.travel(move)
-    visited_rooms.add(player.currentRoom)
+# visited_rooms = set()
+# player.currentRoom = world.startingRoom
+# visited_rooms.add(player.currentRoom)
+# for move in traversalPath:
+#     player.travel(move)
+#     visited_rooms.add(player.currentRoom)
 
 if len(visited_rooms) == len(roomGraph):
-    print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_rooms)} rooms visited")
+    print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_rooms)} rooms visited\n")
     print("Visited Rooms:\n", visited_rooms)
     print("\nDictionary of Previously Visited Rooms:")
 else:
-    print("TESTS FAILED: INCOMPLETE TRAVERSAL")
+    print("TESTS FAILED: INCOMPLETE TRAVERSAL\n")
     print("Visited Rooms:\n", visited_rooms)
     print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
-    print("\nDictionary of Previously Visited Rooms:")
+    print("\nPreviously Visited Rooms:\n")
 
 
 
