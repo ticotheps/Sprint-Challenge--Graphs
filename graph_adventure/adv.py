@@ -204,11 +204,11 @@ while len(roomGraph) != len(my_rooms_graph):
 
 
 game_start()
-print_nested("Rooms Graph:\n", my_rooms_graph)
-print("Should print 's':", get_opposite_direction("n"))
-print("Should print 'n':", get_opposite_direction("s"))
-print("Should print 'w':", get_opposite_direction("e"))
-print("Should print 'e':", get_opposite_direction("w"))
+# print_nested("Visited Rooms Dictionary:\n", visited_total)
+# print("Should print 's':", get_opposite_direction("n"))
+# print("Should print 'n':", get_opposite_direction("s"))
+# print("Should print 'w':", get_opposite_direction("e"))
+# print("Should print 'e':", get_opposite_direction("w"))
 
 
 # TRAVERSAL TEST
@@ -222,12 +222,10 @@ print("Should print 'e':", get_opposite_direction("w"))
 if len(visited_total) == len(roomGraph):
     print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_total)} rooms visited\n")
     print("Visited Rooms:\n", visited_total)
-    print("\nDictionary of Previously Visited Rooms:")
 else:
     print("TESTS FAILED: INCOMPLETE TRAVERSAL\n")
-    print("Visited Rooms:\n", visited_total)
     print(f"{len(roomGraph) - len(visited_total)} unvisited rooms")
-    print("\nPreviously Visited Rooms:\n")
+    print("Visited Rooms:\n", visited_total)
 
 
 
