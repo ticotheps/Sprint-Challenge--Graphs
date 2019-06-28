@@ -222,12 +222,18 @@ print("*************** DID THE TESTS PASS? ****************\n")
 #     visited_rooms.add(player.currentRoom)
 
 if len(visited_total) == len(roomGraph):
-    print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_total)} rooms visited\n")
+    print("YES!!! ALL THE TESTS PASSED! GREAT JOB, TICO!")
+    print(f"Total Moves Made: {len(traversalPath)} moves")
+    print(f"Total Rooms Visited: {len(visited_total)} rooms\n")
     print("Visited Rooms:\n", visited_total)
+    print("Map of Visited Rooms:\n", print_nested(my_rooms_graph))
 else:
+    print("NOPE!!! GET OUTTA HERE WITH THAT BOOTY, SPAGHETTI CODE, BRO! J/K TRY AGAIN!")
     print("TESTS FAILED: INCOMPLETE TRAVERSAL\n")
     print(f"{len(roomGraph) - len(visited_total)} unvisited rooms")
+    print(f"Total Moves Made: {len(traversalPath)} moves")
     print("Visited Rooms:\n", visited_total)
+    print("Map of Visited Rooms:\n", print_nested(my_rooms_graph))
 
 
 #######
