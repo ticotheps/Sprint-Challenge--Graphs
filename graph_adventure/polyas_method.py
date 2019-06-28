@@ -38,4 +38,27 @@
 #         following TWO conditions have been met:
 #            (a) There are a total of 500 entries in your adjacency 
 #                dictionary.
-#            (b) There are no more "?" values in the adjacency dictionary.
+#            (b) There are no more "?" values in the adjacency lists within
+#                your adjacency dictionary.
+
+#  Hints:
+#     (1) Try traversing the smaller graphs in adv.py first.
+
+#     (2) Use Depth First Traversal (DFT) to write an algorithm that: 
+#           (a) picks a RANDOM, unexplored exit from the player's 
+#               CURRENT room.
+#           (b) moves the player in the chosen direction to get to
+#               the NEXT room.
+#           (c) adds the player's move (as a direction, such as 'n',
+#               's', 'e', or 'w') into the 'traversalPath' list.
+#           (d) loops through steps (a) - (c) to continually move the 
+#               player through unexplored exits, until the player reaches
+#               a DEAD-END room with NO UNEXPLORED exits available (meaning
+#               there are no more "?" values in the adjacency list for that
+#               room).
+#           (e) walks the player back to the NEAREST room that DOES
+#               contain an UNEXPLORED exit (meaning there IS at least
+#               ONE "?" value in the adjacency list for that room).
+#           (f) repeats steps (a) - (e) until all 500 rooms have been
+#               visited and each room no longer contains ANY "?" in their
+#               adjacency lists.
