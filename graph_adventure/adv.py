@@ -124,6 +124,20 @@ def find_nearest_unexplored(graph, starting_room_id):
     
     return None
 
+# Adds the player's current room to 'visited_total' list of rooms that
+#   have already been visited, across all trips
+def add_visited_room(graph, current_room):
+    # If the player's current room has NOT already been visited...
+    if current_room.id not in graph:
+        # Create an entry for this room in the adjacency dictionary with
+        #   directions as keys and values of "?" for each available exit.
+        graph[current_room.id] = {i: '?' for i in current_room.getExits()} 
+        # Adds the room ID of this newly-created dictionary entry to the
+        #   'visited_total' list.
+        visited_total.add(current_room.id)
+        
+        
+
 
 
 game_start()
