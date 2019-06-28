@@ -24,9 +24,29 @@ player = Player("Name", world.startingRoom)
 # player.currentRoom.getExits()
 # player.travel(direction)
 
+# Prints an announcement to start the game
+def game_start():
+    print("\n----------------------------------------------------------------")
+    print("\n************** WELCOME TO TICO'S ADVENTURE GAME! ***************\n")
+    print("----------------------------------------------------------------")
+
+# Prints any nested dictionaries in a readable way
+def print_nested(val, nesting = -5):
+    if type(val) == dict:
+	    print("")
+	    nesting += 5
+	    for k in val:
+		    print(nesting * ' ', end='')
+		    print(k, end=': ')
+		    print_nested(val[k],nesting)
+    else:
+	    print(val)
+
 
 # FILL THIS IN
 traversalPath = ['n', 'n']
+
+room_graph = {}
 
 
 # TRAVERSAL TEST
@@ -40,10 +60,15 @@ for move in traversalPath:
 if len(visited_rooms) == len(roomGraph):
     print(f"TESTS PASSED: {len(traversalPath)} moves, {len(visited_rooms)} rooms visited")
     print("Visited Rooms:\n", visited_rooms)
+    print("\nDictionary of Previously Visited Rooms:")
 else:
     print("TESTS FAILED: INCOMPLETE TRAVERSAL")
     print("Visited Rooms:\n", visited_rooms)
     print(f"{len(roomGraph) - len(visited_rooms)} unvisited rooms")
+    print("\nDictionary of Previously Visited Rooms:")
+
+game_start()
+print_nested(room_graph)
 
 
 

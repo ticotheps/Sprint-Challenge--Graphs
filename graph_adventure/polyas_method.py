@@ -97,3 +97,100 @@
 #                           (e) .reverse() 
 
 #     (5) Once all exits have been explored, the game is over!
+
+#------------------------------DEVISE A PLAN-----------------------------
+
+#     (1) Use BFS (with a DEQUE) when the player reaches a room that has NO
+#         exits or has NO UNEXPLORED exits available at the player's 
+#         current room.
+
+#     (2) Use DFT (with a DEQUE) to move the player through UNEXPLORED 
+#         exits.
+#            (a) Create an adjancency dictionary [of adjacency lists] that 
+#                will store an updated log of 'room' entries for each room 
+#                that the player has already visited. 
+#            (b) Each 'room' entry in the adjacency dictionary will store 
+#                an adjacency list of 'exit' values (i.e. - '?', 'n', 's', 'e', 'w').
+#            (c) Create a DEQUE called 'traversalPath' that will store 
+#                a list of each move (in the form of a direction, such as:
+#                "n", "s", "e", "w") that the player makes, from the start
+#                of the game to the end of the game. 
+#            (d) Use a WHILE loop that will continue (so long as the the
+#                number of entries in the dictionary is < 500) to move the 
+#                player from room to room AS LONG AS the player continues
+#                to enter rooms that have UNEXPLORED exits in them.
+#                available, which will also include rooms with 0 exits.
+#                   (i)   If an unexplored exit exists at the current room...
+#                          (1) ...and if the current room already exists in
+#                              the dictionary of 'room' entries...
+#                                 (a) continue with the outer IF
+#                                     statement.
+#                          (2) ...and if it does NOT already exist in the
+#                              dictionary of 'room' entries...
+#                                 (b) then add it and continue with the
+#                                     outer IF statement.
+#                          (3) move the player through a randomly-chosen, 
+#                              unexplored exit to the NEXT room. 
+#                          (4) log the player's move in a DEQUE you'll
+#                              create called 'traversalPath'. 
+#                          (5) Then, exit this IF statement & re-enter the
+#                              outer WHILE loop to evaluate the next room.
+#                   (ii)  If an unexplored exit DOES NOT exist at the 
+#                         current room, call the BFS helper method, which 
+#                         will utilize the same DICT and the same DEQUE 
+#                         ('traversalPath') as this DFT method, but will
+#                         also utilize a newly created DEQUE with the 
+#                         shortest BACKWARDS path, to the NEAREST room that
+#                         contains an unexplored exit.
+#                           (1) Pass in the player's 'current room' as the
+#                               'starting_vertex' and pass in a "?" as the 
+#                               'destination_vertex' for the BFS method. 
+#                           (2) Use the built-in ".reverse()" DEQUE method 
+#                               to reverse the order of 'traversalPath' 
+#                               ([left:right] ==> [right:left]) to allow
+#                               for BACKWARDS traversing of the
+#                               'traversalPath' list.
+#                           (3) Perform the BFS method on the newly-
+#                               reversed 'traversalPath' to RETURN a new
+#                               DEQUE of the shortest path (as a list 
+#                               of ROOM IDs) to the nearest room with 
+#                               an unexplored exit.
+#                           (4) Use a FOR loop to iterate through the 
+#                               'shortest path' list of room IDs to:
+#                                  (a) convert each room ID into a 
+#                                      DIRECTION (i.e. - "n", "s", "e", 
+#                                      "w") by comparing the room ID
+#                                      (from the 'shortest path' list)
+#                                      to the values of the 'room' entries
+#                                      in the adjacent dictionary that 
+#                                      you've been creating with each
+#                                      move, this entire time.
+#                                  (b) move the player according to that
+#                                      newly-converted direction.
+#                                  (c) add that newly-converted direction
+#                                      to the BEGINNING of the 
+#                                      'traversalPath' DEQUE, using
+#                                      DEQUE'S built-in ".appendLeft()"
+#                                      method.
+#                                  (d) Once the player has traversed
+#                                      through the 'shortest path' list,
+#                                      to arrive at the designated room
+#                                      (with the unexplored exit), set
+#                                      the 'starting_vertex' for the DFT
+#                                      method equal to the player's CURRENT
+#                                      room, which will allow the player
+#                                      to enter the FIRST WHILE loop (upon
+#                                      exiting this FOR loop), from
+#                                      the DFT method at the start.
+#                           (5) Use the ".reverse()" built-in DEQUE method 
+#                               AGAIN to UN-reverse the CURRENT order of the
+#                               'traversalPath', from [right:left] BACK to 
+#                               [left:right], which will allow the player 
+#                               to traverse through the rooms in the 
+#                               ORIGINAL direction, once the player 
+#                               re-enters the DFT WHILE loop, WITH a new 
+#                               'starting_vertex'.
+
+#     (3) MVP: Get all the tests to pass.
+#     (4) MVP: Get the length of 'traversalPath' to be < 2000 moves total.
+#     (5) ***STRETCH***: Achieve a 'traversalPath' length of < 1000 moves.
